@@ -1,4 +1,4 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
+import { Links, Meta, NavLink, Outlet, Scripts, ScrollRestoration, useLoaderData, useLocation } from "@remix-run/react";
 import "./tailwind.css";
 import { getAuthFromRequest } from "./auth";
 import { LoaderFunctionArgs } from "@remix-run/node";
@@ -10,6 +10,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useLoaderData<typeof loader>();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
     <html lang="en">
@@ -23,9 +25,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <header>
           <h1>Remix Demo</h1>
           {user && (
-            <form method="post" action="/logout">
-              <button type="submit">Logout</button>
-            </form>
+            <div>
+              {currentPath !== "/" && (
+                <nav>
+                  <ul>
+                    <li>
+                      <NavLink to="/">Home</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/todos">Todos</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/posts">Posts</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/alubms">Alubms</NavLink>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+              <form method="post" action="/logout">
+                <button type="submit">Logout</button>
+              </form>
+            </div>
           )}
         </header>
         {children}
