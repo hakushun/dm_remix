@@ -39,7 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       <NavLink to="/posts">Posts</NavLink>
                     </li>
                     <li>
-                      <NavLink to="/alubms">Alubms</NavLink>
+                      <NavLink to="/albums">Albums</NavLink>
                     </li>
                   </ul>
                 </nav>
